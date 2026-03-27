@@ -25,11 +25,15 @@ public class Snake {
         this.drawSquareInterface = drawSquareInterface;
         int middle = Board.NUM_COLS / 2;
         for (int i = 0; i < 4; i++) {
-            Node node = new Node(middle, middle - i);
+            Node node = new Node(middle, middle + i);
             addNode(node);
         }
         nodesToGrow = 0;
        
+    }
+    
+    public Direction getDirection() {
+        return direction;
     }
    
     public void addNode(Node node) {
@@ -46,12 +50,43 @@ public class Snake {
         }
     }
     
-    public void canMove(int row, int col) {
+    public boolean canMove() {
         switch(direction) {
             case UP:
-                if (nodes.getFirst() && nodes.get(col) > 0) {
-                    
-                }
+                return nodes.getFirst().getRow() - 1 >= 0;
+            case DOWN:
+                return nodes.getFirst().getRow() + 1 < Board.NUM_ROWS;
+            case LEFT:
+                return nodes.getFirst().getCol() - 1 >= 0;
+            case RIGHT:
+                return nodes.getFirst().getCol() + 1 < Board.NUM_COLS;
         }
+        return true;
+    }
+    
+    public void Move() {
+        int row = nodes.getFirst().getRow();
+        int col = nodes.getFirst().getCol();
+        Node node = null;
+        switch(direction) {
+            case UP:
+                node = new Node(row - 1, col);
+                break;
+            case DOWN:
+                node = new Node(row + 1, col);
+                break;
+            case LEFT:
+                node = new Node(row, col - 1);
+               break;
+            case RIGHT:
+                node = new Node(row, col + 1);
+                break;
+        }
+        nodes.addFirst(node);
+        nodes.remove(nodes.getLast());
+    }
+    
+    public void changeDirection(Direction newDirection) {
+        direction = newDirection;
     }
 }

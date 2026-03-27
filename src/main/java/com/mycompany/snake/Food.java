@@ -10,11 +10,11 @@ package com.mycompany.snake;
  */
 public class Food extends Node {
     
-    public Food (int row, int col) {
-        super(row, col); 
-    }
-    
-    public void foodRandom() {
-        
+    public Food() {
+        super(0, 0);
+        int row = (int)(Math.random() * Board.NUM_ROWS);
+        int col = (int)(Math.random() * Board.NUM_COLS);
+        setRow(row);
+        setCol(col);
     }
 }

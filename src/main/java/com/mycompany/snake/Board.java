@@ -7,6 +7,11 @@ package com.mycompany.snake;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.Timer;
 
 /**
  *
@@ -16,9 +21,50 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Board.class.getName());
     
+    class MyKeyAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_LEFT:
+                    if(snake.getDirection() != Direction.RIGHT) {
+                        snake.changeDirection(Direction.LEFT);
+                    }
+                    System.out.println("LEFT");
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(snake.getDirection() != Direction.LEFT) {
+                       snake.changeDirection(Direction.RIGHT);
+                    }
+                    System.out.println("RIGHT");
+                    break;
+                case KeyEvent.VK_UP:
+                    if (snake.getDirection() != Direction.DOWN) {
+                        snake.changeDirection(Direction.UP);
+                    }
+                    System.out.println("UP");
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if (snake.getDirection() != Direction.UP) {
+                       snake.changeDirection(Direction.DOWN);
+                    }
+                    System.out.println("DOWN");
+                    break;
+                case KeyEvent.VK_SPACE:
+                    pause();
+                default:
+                    break;
+            }
+            repaint();
+        }
+    }
+    
     public static int NUM_ROWS = 40;
     public static int NUM_COLS = 20;
     private Snake snake;
+    private Timer timer;
+    private DrawSquareInterface drawSquareInterface;
+    public static final int DELTA_TIME = 300;
     
     /**
      * Creates new form Board
@@ -26,6 +72,28 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     public Board() {
         initComponents();
         snake = new Snake(this);
+        timer = new Timer(DELTA_TIME, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                tick();
+            }
+        });
+        initGame();
+    }
+    
+    private void initGame() {
+        timer.start();
+    }
+    
+    private void tick() {
+        if (snake.canMove()) {
+            snake.Move();
+        }
+        repaint();
+    }
+    
+    private void pause() {
+        timer.stop();
     }
     
     private int squareWidth() {
@@ -66,6 +134,13 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         super.paintComponent(g);
         snake.paint(g);
         Toolkit.getDefaultToolkit().sync();
+    }
+    
+    private void paintBorderBoard(Graphics g) {
+        g.setColor(Color.BLACK);
+        int width = squareWidth() * NUM_COLS;
+        int heigth = squareHeight() * NUM_ROWS;
+        g.drawRect(0, 0, width, heigth);
     }
 
     /**
