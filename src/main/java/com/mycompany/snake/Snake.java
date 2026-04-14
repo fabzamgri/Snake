@@ -39,11 +39,15 @@ public class Snake {
     public void addNode(Node node) {
         nodes.add(0, node);
     }
+    
+    public void grow(int amount) {
+        nodesToGrow += amount;
+    }
    
     public void paint(Graphics g) {
         boolean first = true;
         for(Node node : nodes) {
-            drawSquareInterface.drawSquare(g, node.getRow(), node.getCol(), first);
+            drawSquareInterface.drawSquare(g, node.getRow(), node.getCol(), SquareType.HEAD);
             if (first) {
                 first = false;
             }
@@ -75,11 +79,11 @@ public class Snake {
             case DOWN:
                 node = new Node(row + 1, col);
                 break;
-            case LEFT:
-                node = new Node(row, col - 1);
-               break;
+            case LEFT:                         //Modo insano GAAAAAAAAAAAA
+                node = new Node(row, col - 1); //(col, row - 1)
+               break;                          //DELTATIME = 100
             case RIGHT:
-                node = new Node(row, col + 1);
+                node = new Node(row, col + 1); //(col, row + 1)
                 break;
         }
         nodes.addFirst(node);
@@ -89,4 +93,20 @@ public class Snake {
     public void changeDirection(Direction newDirection) {
         direction = newDirection;
     }
+    
+    public boolean eats(Food food) {
+        int row = nodes.getFirst().getRow();
+        int col = nodes.getFirst().getCol();
+        return (food.getRow() == row && food.getCol() == col);
+    }
+    
+    /*ublic boolean colitionBody(Node node) {
+        for (Node n : nodes) {
+            if (node.getRow() == n.getRow() && node.getCol() == n.getCol()) {
+                return node.
+            }
+        }
+        return false;
+    }
+*/
 }

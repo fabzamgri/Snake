@@ -4,6 +4,7 @@
  */
 package com.mycompany.snake;
 
+import static com.mycompany.snake.SquareType.HEAD;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -65,12 +66,18 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     private Timer timer;
     private DrawSquareInterface drawSquareInterface;
     public static final int DELTA_TIME = 300;
+    private Food food;
     
     /**
      * Creates new form Board
      */
     public Board() {
         initComponents();
+        
+        setFocusable(true);
+        requestFocusInWindow();
+        addKeyListener(new MyKeyAdapter());
+        
         snake = new Snake(this);
         timer = new Timer(DELTA_TIME, new ActionListener() {
             @Override
@@ -83,11 +90,30 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     
     private void initGame() {
         timer.start();
+        food = new Food(snake, this);
     }
     
     private void tick() {
         if (snake.canMove()) {
             snake.Move();
+            if (snake.eats(food)) {
+                snake.grow(1);
+                food = new Food(snake, this);
+                snake.addNode(food);
+            }
+        }
+        repaint();
+    }
+    
+    private void tick2() {
+        if (snake.canMove()) {
+            snake.Move();
+            if (snake.eats(food)) {
+                snake.grow(1);
+                food = new Food(snake, this);
+                //Patentalo, agujero negro, nuevo modo
+                snake.addNode(food);
+            }
         }
         repaint();
     }
@@ -105,7 +131,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     }
     
     public void drawSquare(Graphics g, int row, int col,
-            boolean isHead) {
+            SquareType type) {
         Color colors[] = {new Color(0, 0, 0),
             new Color(204, 102, 102),
             new Color(102, 204, 102), new Color(102, 102, 204),
@@ -114,7 +140,8 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         };
         int x = col * squareWidth();
         int y = row * squareHeight();
-        Color color = isHead ? new Color(204, 102, 102) : new Color(102, 102, 204);
+        //Color color = isHead ? new Color(204, 102, 102) : new Color(102, 102, 204);
+        Color color = getSquareColor(type);
         g.setColor(color);
         g.fillRect(x + 1, y + 1, squareWidth() - 2,
                 squareHeight() - 2);
@@ -133,6 +160,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         snake.paint(g);
+        food.paintFood(g);
         Toolkit.getDefaultToolkit().sync();
     }
     
@@ -141,6 +169,22 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         int width = squareWidth() * NUM_COLS;
         int heigth = squareHeight() * NUM_ROWS;
         g.drawRect(0, 0, width, heigth);
+    }
+    
+    private Color getSquareColor(SquareType type) {
+        switch(type) {
+            case HEAD:
+                return new Color(131, 39, 154);
+            case BODY:
+                return new Color(19, 181, 208);
+            case FOOD:
+                return new Color(241, 61, 171);
+            case SUPERFOOD:
+                return new Color(102, 102, 204);    
+            
+            default:
+                throw new AssertionError();
+        }
     }
 
     /**
