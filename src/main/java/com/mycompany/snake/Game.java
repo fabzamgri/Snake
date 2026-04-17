@@ -4,6 +4,8 @@
  */
 package com.mycompany.snake;
 
+import com.mycompany.snake.Interfaces.Incrementer;
+
 /**
  *
  * @author fabzamgri
@@ -11,12 +13,23 @@ package com.mycompany.snake;
 public class Game extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Game.class.getName());
+    
+    private Incrementer incrementer;
+    private GameOverDialog gameOverDialog;
+    private Board board;
+    
 
     /**
      * Creates new form Game
      */
     public Game() {
         initComponents();
+        setLocationRelativeTo(null);
+        board1.setIncrementer(scoreBoard1);
+        gameOverDialog = new GameOverDialog(this, true);
+        board1.setGameOverInterface(gameOverDialog);
+        gameOverDialog.setInitGamer(board1);
+        
     }
 
     /**
@@ -29,6 +42,7 @@ public class Game extends javax.swing.JFrame {
     private void initComponents() {
 
         board1 = new com.mycompany.snake.Board();
+        scoreBoard1 = new com.mycompany.snake.ScoreBoard();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -41,11 +55,13 @@ public class Game extends javax.swing.JFrame {
         board1.setLayout(board1Layout);
         board1Layout.setHorizontalGroup(
             board1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 341, Short.MAX_VALUE)
+            .addComponent(scoreBoard1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         board1Layout.setVerticalGroup(
             board1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 417, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, board1Layout.createSequentialGroup()
+                .addContainerGap(400, Short.MAX_VALUE)
+                .addComponent(scoreBoard1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(board1, java.awt.BorderLayout.CENTER);
@@ -58,7 +74,8 @@ public class Game extends javax.swing.JFrame {
         jMenuItem1.setText("Normal Mode");
         jMenu2.add(jMenuItem1);
 
-        jMenuItem2.setText("CRAZY MODE LALALALLA");
+        jMenuItem2.setText("snake void");
+        jMenuItem2.setToolTipText("");
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
@@ -100,5 +117,6 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private com.mycompany.snake.ScoreBoard scoreBoard1;
     // End of variables declaration//GEN-END:variables
 }

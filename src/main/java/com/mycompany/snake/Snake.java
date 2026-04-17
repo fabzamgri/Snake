@@ -4,6 +4,7 @@
  */
 package com.mycompany.snake;
 
+import com.mycompany.snake.Interfaces.DrawSquareInterface;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,14 @@ public class Snake {
             drawSquareInterface.drawSquare(g, node.getRow(), node.getCol(), SquareType.HEAD);
             if (first) {
                 first = false;
+            } else {
+                drawSquareInterface.drawSquare(g, node.getRow(), node.getCol(), SquareType.BODY);
             }
         }
     }
     
-    public boolean canMove() {
+    //Metodo para limitar el espacio del snake
+    /*public boolean canMove() {
         switch(direction) {
             case UP:
                 return nodes.getFirst().getRow() - 1 >= 0;
@@ -67,7 +71,9 @@ public class Snake {
         }
         return true;
     }
+*/
     
+    //Movimiento del snake
     public void Move() {
         int row = nodes.getFirst().getRow();
         int col = nodes.getFirst().getCol();
@@ -100,13 +106,48 @@ public class Snake {
         return (food.getRow() == row && food.getCol() == col);
     }
     
-    /*ublic boolean colitionBody(Node node) {
-        for (Node n : nodes) {
-            if (node.getRow() == n.getRow() && node.getCol() == n.getCol()) {
-                return node.
+    public boolean isFruitInsideSnake(Node nodeX) {
+      for (Node node: nodes) {
+          if (nodeX.getRow() == node.getRow() && nodeX.getCol() == node.getCol()) {
+              return true;
+          }
+      }
+      return false;
+    }
+
+    
+    public boolean canMoveAny() {
+        int row = nodes.getFirst().getRow();
+        int col = nodes.getFirst().getCol();
+        Node node = null;
+        switch (direction) {
+            case UP:
+                node = new Node(row - 1, col);
+                break;
+            case DOWN:
+                node = new Node(row + 1, col);
+                break;
+            case LEFT:
+                node = new Node(row, col - 1);
+                break;
+            case RIGHT:
+                node = new Node(row, col + 1);
+                break;
+        }
+        if (node.getRow() < 0 || node.getRow() >= Board.NUM_ROWS || //Sirven para mirar las 4 paredes .....
+                node.getCol() < 0 || node.getCol() >= Board.NUM_COLS || colidesWithItself(node)) { //Mira el nodo que seleccionamos esta dentro de la snake
+            return false;
+        }
+                
+        return true;  
+    }
+    
+    public boolean colidesWithItself(Node nodeX) { //lo 
+        for (Node node: nodes) { //nodes = longitud snake .. node -> i = 0
+            if (nodeX.getRow() == node.getRow() && nodeX.getCol() == node.getCol()) { //Si son iguales: true
+                return true;
             }
         }
-        return false;
+        return false; //si no, que siga
     }
-*/
 }

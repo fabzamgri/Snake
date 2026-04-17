@@ -4,6 +4,9 @@
  */
 package com.mycompany.snake;
 
+import com.mycompany.snake.Interfaces.DrawSquareInterface;
+import com.mycompany.snake.Interfaces.GameOverInterface;
+import com.mycompany.snake.Interfaces.Incrementer;
 import static com.mycompany.snake.SquareType.HEAD;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -65,8 +68,12 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     private Snake snake;
     private Timer timer;
     private DrawSquareInterface drawSquareInterface;
-    public static final int DELTA_TIME = 300;
+    public static final int DELTA_TIME = 100;
     private Food food;
+    private Incrementer incrementer;
+    private SpecialFood specialFood;
+    private ScoreBoard sb;
+    private GameOverInterface gameOverInterface;
     
     /**
      * Creates new form Board
@@ -78,6 +85,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         requestFocusInWindow();
         addKeyListener(new MyKeyAdapter());
         
+        specialFood = null;
         snake = new Snake(this);
         timer = new Timer(DELTA_TIME, new ActionListener() {
             @Override
@@ -91,31 +99,71 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
     private void initGame() {
         timer.start();
         food = new Food(snake, this);
+        specialFood = new SpecialFood(snake, this);
     }
     
     private void tick() {
-        if (snake.canMove()) {
+        if (snake.canMoveAny()) {
             snake.Move();
+            if (snake.eats(food)) {
+                snake.grow(1);
+                snake.addNode(food);
+                food = new Food(snake, this);
+                //El agujero negro solo sale si cambias la secuencia en la que se ejecuta el food XD.
+                System.out.println("eat it");
+                incrementer.incrementScore(1);
+            }
+            if (snake.eats(specialFood)) {
+                snake.grow(3);
+                snake.addNode(specialFood);
+                specialFood = new SpecialFood(snake, this);
+                System.out.println("hooo my cock");
+                incrementer.incrementScore(3);
+            }
+            
+            if (snake.colidesWithItself(food)) {
+                System.out.println("Salvation chuqubuke ijeanlli añauwu");
+            }
+        } else {
+            timer.stop();
+            //System.exit(0);
+        }
+        repaint();
+    }
+    
+    //Comenzar cuando haya terminado el programa
+    private void tickBlackVoid() {
+        if (snake.canMoveAny()) {
+            snake.Move();
+            snake.colidesWithItself(food);
+            snake.canMoveAny();
             if (snake.eats(food)) {
                 snake.grow(1);
                 food = new Food(snake, this);
                 snake.addNode(food);
+                
+                //El agujero negro solo sale si cambias la secuencia en la que se ejecuta el food XD.
+                System.out.println("eat it");
+                incrementer.incrementScore(1);
+            }
+            if (snake.eats(specialFood)) {
+                snake.grow(3);
+                specialFood = new SpecialFood(snake, this);
+                snake.addNode(specialFood);
+                
+                System.out.println("hooo my cock");
+                incrementer.incrementScore(3);
             }
         }
         repaint();
     }
     
-    private void tick2() {
-        if (snake.canMove()) {
-            snake.Move();
-            if (snake.eats(food)) {
-                snake.grow(1);
-                food = new Food(snake, this);
-                //Patentalo, agujero negro, nuevo modo
-                snake.addNode(food);
-            }
-        }
-        repaint();
+    public void setGameOverInterface(GameOverInterface gmInterface) {
+        this.gameOverInterface = gmInterface;
+    }
+    
+    public void setIncrementer(Incrementer incrementer) {
+        this.incrementer = incrementer;
     }
     
     private void pause() {
@@ -161,6 +209,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         super.paintComponent(g);
         snake.paint(g);
         food.paintFood(g);
+        specialFood.paintFood(g);
         Toolkit.getDefaultToolkit().sync();
     }
     
@@ -186,6 +235,13 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
                 throw new AssertionError();
         }
     }
+    
+    /*
+    No se que estoy haciendo:
+    - Falta añadir un bloqueo de aparicion de la fruta, si la fruta aparece en el cuerpo de la fruta, que se vaya a otra parte donde este vacio
+    - Poder cambiar de modos entre normal a locura extrema DAAAAAAA
+    - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
+    */
 
     /**
      * This method is called from within the constructor to initialize the form.

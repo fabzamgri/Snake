@@ -4,6 +4,7 @@
  */
 package com.mycompany.snake;
 
+import com.mycompany.snake.Interfaces.DrawSquareInterface;
 import java.awt.Graphics;
 
 /**
@@ -12,20 +13,20 @@ import java.awt.Graphics;
  */
 public class Food extends Node {
     
-    private DrawSquareInterface draw;
+    public DrawSquareInterface drawSquareInterface;
     
     public Food(Snake snake, DrawSquareInterface drawSquareInterface) {
         super(0, 0);
-        this.draw = drawSquareInterface;
-      //  do {
+        this.drawSquareInterface = drawSquareInterface;
+        do {
         int row = (int)(Math.random() * Board.NUM_ROWS);
         int col = (int)(Math.random() * Board.NUM_COLS);
         setRow(row);
         setCol(col);
-        //} while (snake.colitionBody(this));
+        } while (snake.isFruitInsideSnake(this));
     }
     
     public void paintFood(Graphics g) {
-        draw.drawSquare(g, getRow(), getCol(), SquareType.FOOD);
+        drawSquareInterface.drawSquare(g, getRow(), getCol(), SquareType.FOOD);
     }
 }
