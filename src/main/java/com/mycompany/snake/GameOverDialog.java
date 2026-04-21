@@ -16,7 +16,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameOverDialog.class.getName());
     InitGamer initGamer;
-    Board board;
+    Board board = new Board();
 
     /**
      * Creates new form GameOverDialog
@@ -28,6 +28,10 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     
     public void setInitGamer(InitGamer initGamer) {
         this.initGamer = initGamer;
+    }
+    
+    public void setVoidMode() {
+        
     }
     
     @Override
@@ -56,16 +60,21 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         jLabel1.setFont(new java.awt.Font("DejaVu Serif Condensed", 0, 36)); // NOI18N
         jLabel1.setText("Game Over");
 
+        Restart.setBackground(new java.awt.Color(255, 255, 204));
         Restart.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
         Restart.setText("Restart");
+        Restart.setBorder(null);
         Restart.addActionListener(this::RestartActionPerformed);
 
+        BlackVoid.setBackground(new java.awt.Color(153, 153, 255));
         BlackVoid.setText("Black void");
         BlackVoid.addActionListener(this::BlackVoidActionPerformed);
 
+        Spider.setBackground(new java.awt.Color(0, 153, 153));
         Spider.setText("Spider (experimental)");
         Spider.addActionListener(this::SpiderActionPerformed);
 
+        EXit.setBackground(new java.awt.Color(255, 102, 102));
         EXit.setText("Exit");
         EXit.addActionListener(this::EXitActionPerformed);
 
@@ -111,13 +120,23 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
 
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
-        board = new Board();
-        board.initGame();
+        if (initGamer != null) {
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
     }//GEN-LAST:event_RestartActionPerformed
 
     private void BlackVoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlackVoidActionPerformed
         // TODO add your handling code here:
+        if (initGamer != null) {
+            board.setMode(false);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
     }//GEN-LAST:event_BlackVoidActionPerformed
 
     private void SpiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpiderActionPerformed

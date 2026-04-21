@@ -29,7 +29,6 @@ public class Game extends javax.swing.JFrame {
         board1.setGameOverInterface(gameOverDialog);
         gameOverDialog.setInitGamer(board1);
         
-        
     }
 
     /**
@@ -50,6 +49,8 @@ public class Game extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        board1.setBackground(new java.awt.Color(192, 239, 202));
 
         javax.swing.GroupLayout board1Layout = new javax.swing.GroupLayout(board1);
         board1.setLayout(board1Layout);

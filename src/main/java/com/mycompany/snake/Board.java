@@ -75,6 +75,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private SpecialFood specialFood;
     private ScoreBoard sb;
     private GameOverInterface gameOverInterface;
+    private GameOverDialog gameOverDialog;
     
     /**
      * Creates new form Board
@@ -87,26 +88,36 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         addKeyListener(new MyKeyAdapter());
         
         specialFood = null;
+        
         timer = new Timer(DELTA_TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                tick();
+                setMode(false);
             }
         });
         initGame();
     }
     
     public void initGame() {
+        if (timer != null) {
+            timer.stop();
+        }
+
+        // 2. Resetear el marcador
         if (incrementer != null) {
             incrementer.reset();
         }
-        timer.start();
+
+        // 3. Crear los objetos PRIMERO
         snake = new Snake(this);
         food = new Food(snake, this);
         specialFood = new SpecialFood(snake, this);
+
+        // 4. Iniciar el cronómetro AL FINAL
+        timer.start();
     }
     
-    private void tick() {
+    public void tick() {
         if (snake.canMoveAny()) {
             snake.Move();
             if (snake.eats(food)) {
@@ -135,16 +146,13 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     }
     
     //Comenzar cuando haya terminado el programa
-    private void tickBlackVoid() {
+    public void tickBlackVoid() {
         if (snake.canMoveAny()) {
             snake.Move();
-            snake.colidesWithItself(food);
-            snake.canMoveAny();
             if (snake.eats(food)) {
                 snake.grow(1);
-                food = new Food(snake, this);
                 snake.addNode(food);
-                
+                food = new Food(snake, this);
                 //El agujero negro solo sale si cambias la secuencia en la que se ejecuta el food XD.
                 System.out.println("eat it");
                 incrementer.incrementScore(1);
@@ -153,17 +161,37 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
                 snake.grow(3);
                 specialFood = new SpecialFood(snake, this);
                 snake.addNode(specialFood);
-                
                 System.out.println("hooo my cock");
                 incrementer.incrementScore(3);
             }
+            
+            if (snake.colidesWithItself(food)) {
+                System.out.println("Salvation chuqubuke ijeanlli añauwu");
+            }
+        } else {
+            gameOver();
         }
         repaint();
     }
     
+    public boolean setMode(boolean mode) {
+        if(mode) {
+            tick();
+        } else {
+            tickBlackVoid();
+        }
+        return false;
+    }
+    
     public void gameOver() {
         timer.stop();
+    // Verificamos si la interfaz ha sido asignada antes de usarla
+    if (gameOverInterface != null) {
         gameOverInterface.setVisible(this);
+    } else {
+        System.err.println("Error: GameOverInterface no ha sido inicializada.");
+        // Opcional: podrías reiniciar el juego automáticamente aquí o imprimir un log
+    }
     }
     
     public void setGameOverInterface(GameOverInterface gmInterface) {
@@ -246,8 +274,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     
     /*
     No se que estoy haciendo:
-    - Falta añadir un bloqueo de aparicion de la fruta, si la fruta aparece en el cuerpo de la fruta, que se vaya a otra parte donde este vacio
-    - Poder cambiar de modos entre normal a locura extrema DAAAAAAA
+    - Poder cambiar de modos entre normal a locura extrema DAAAAAAA (En proceso)
     - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
     */
 
