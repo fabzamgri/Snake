@@ -16,7 +16,6 @@ public class Game extends javax.swing.JFrame {
     
     private Incrementer incrementer;
     private GameOverDialog gameOverDialog;
-    private Board board;
     
 
     /**
@@ -24,11 +23,12 @@ public class Game extends javax.swing.JFrame {
      */
     public Game() {
         initComponents();
+        gameOverDialog = new GameOverDialog(this, true);
         setLocationRelativeTo(null);
         board1.setIncrementer(scoreBoard1);
-        gameOverDialog = new GameOverDialog(this, true);
         board1.setGameOverInterface(gameOverDialog);
         gameOverDialog.setInitGamer(board1);
+        
         
     }
 

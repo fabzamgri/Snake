@@ -7,6 +7,7 @@ package com.mycompany.snake;
 import com.mycompany.snake.Interfaces.DrawSquareInterface;
 import com.mycompany.snake.Interfaces.GameOverInterface;
 import com.mycompany.snake.Interfaces.Incrementer;
+import com.mycompany.snake.Interfaces.InitGamer;
 import static com.mycompany.snake.SquareType.HEAD;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -21,7 +22,7 @@ import javax.swing.Timer;
  *
  * @author fabzamgri
  */
-public class Board extends javax.swing.JPanel implements DrawSquareInterface{
+public class Board extends javax.swing.JPanel implements DrawSquareInterface, InitGamer{
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Board.class.getName());
     
@@ -86,7 +87,6 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         addKeyListener(new MyKeyAdapter());
         
         specialFood = null;
-        snake = new Snake(this);
         timer = new Timer(DELTA_TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -96,8 +96,12 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
         initGame();
     }
     
-    private void initGame() {
+    public void initGame() {
+        if (incrementer != null) {
+            incrementer.reset();
+        }
         timer.start();
+        snake = new Snake(this);
         food = new Food(snake, this);
         specialFood = new SpecialFood(snake, this);
     }
@@ -125,8 +129,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
                 System.out.println("Salvation chuqubuke ijeanlli añauwu");
             }
         } else {
-            timer.stop();
-            //System.exit(0);
+            gameOver();
         }
         repaint();
     }
@@ -156,6 +159,11 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface{
             }
         }
         repaint();
+    }
+    
+    public void gameOver() {
+        timer.stop();
+        gameOverInterface.setVisible(this);
     }
     
     public void setGameOverInterface(GameOverInterface gmInterface) {

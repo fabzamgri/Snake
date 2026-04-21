@@ -16,6 +16,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameOverDialog.class.getName());
     InitGamer initGamer;
+    Board board;
 
     /**
      * Creates new form GameOverDialog
@@ -111,7 +112,8 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        initGamer.initGame();
+        board = new Board();
+        board.initGame();
     }//GEN-LAST:event_RestartActionPerformed
 
     private void BlackVoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlackVoidActionPerformed
