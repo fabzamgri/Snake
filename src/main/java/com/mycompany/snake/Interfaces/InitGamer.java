@@ -10,4 +10,8 @@ package com.mycompany.snake.Interfaces;
  */
 public interface InitGamer {
     public void initGame();
+    //Podria hacerse con un case posiblemente pero mejor hago otro boolean
+    public void setMode(boolean blackVoid);
+    //Mejor hago un booleano de que snake prefiere el jugador
+    public void setSnakeBody(boolean snakeBody);
 }

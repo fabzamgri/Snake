@@ -4,6 +4,10 @@
  */
 package com.mycompany.snake;
 
+import static com.mycompany.snake.Direction.DOWN;
+import static com.mycompany.snake.Direction.LEFT;
+import static com.mycompany.snake.Direction.RIGHT;
+import static com.mycompany.snake.Direction.UP;
 import com.mycompany.snake.Interfaces.DrawSquareInterface;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -96,6 +100,28 @@ public class Snake {
         nodes.remove(nodes.getLast());
     }
     
+    public void MoveSpider() {
+        int row = nodes.getFirst().getRow();
+        int col = nodes.getFirst().getCol();
+        Node node = null;
+        switch(direction) {
+            case UP:
+                node = new Node(col - 1, row);
+                break;
+            case DOWN:
+                node = new Node(col + 1, row);
+                break;
+            case LEFT:                         //Modo insano GAAAAAAAAAAAA
+                node = new Node(row, col - 1); //(col, row - 1)
+               break;                          //DELTATIME = 100
+            case RIGHT:
+                node = new Node(row, col + 1); //(col, row + 1)
+                break;
+        }
+        nodes.addFirst(node);
+        nodes.remove(nodes.getLast());
+    }
+    
     public void changeDirection(Direction newDirection) {
         direction = newDirection;
     }
@@ -109,6 +135,7 @@ public class Snake {
     public boolean isFruitInsideSnake(Node nodeX) {
       for (Node node: nodes) {
           if (nodeX.getRow() == node.getRow() && nodeX.getCol() == node.getCol()) {
+               System.out.println("Damn bruhh");
               return true;
           }
       }

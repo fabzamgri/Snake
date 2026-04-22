@@ -50,7 +50,7 @@ public class Game extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        board1.setBackground(new java.awt.Color(192, 239, 202));
+        board1.setBackground(new java.awt.Color(0, 69, 41));
 
         javax.swing.GroupLayout board1Layout = new javax.swing.GroupLayout(board1);
         board1.setLayout(board1Layout);
@@ -66,6 +66,9 @@ public class Game extends javax.swing.JFrame {
         );
 
         getContentPane().add(board1, java.awt.BorderLayout.CENTER);
+
+        jMenuBar1.setBackground(new java.awt.Color(132, 67, 255));
+        jMenuBar1.setForeground(new java.awt.Color(134, 35, 180));
 
         jMenu1.setText("PAUSE");
         jMenuBar1.add(jMenu1);

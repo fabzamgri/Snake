@@ -69,13 +69,15 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private Snake snake;
     private Timer timer;
     private DrawSquareInterface drawSquareInterface;
-    public static final int DELTA_TIME = 100;
+    public static final int DELTA_TIME = 200;
     private Food food;
     private Incrementer incrementer;
     private SpecialFood specialFood;
     private ScoreBoard sb;
     private GameOverInterface gameOverInterface;
     private GameOverDialog gameOverDialog;
+    private boolean isNormalMode = true;
+    private boolean isSnakeOrSpider = true;
     
     /**
      * Creates new form Board
@@ -92,7 +94,11 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         timer = new Timer(DELTA_TIME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                setMode(false);
+                if (isNormalMode) {
+                    tick();
+                } else {
+                    tickBlackVoid();
+                }
             }
         });
         initGame();
@@ -119,7 +125,12 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     
     public void tick() {
         if (snake.canMoveAny()) {
-            snake.Move();
+            if(isSnakeOrSpider) {
+                snake.Move();
+            } else {
+                snake.MoveSpider();
+            }
+            
             if (snake.eats(food)) {
                 snake.grow(1);
                 snake.addNode(food);
@@ -148,7 +159,11 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     //Comenzar cuando haya terminado el programa
     public void tickBlackVoid() {
         if (snake.canMoveAny()) {
-            snake.Move();
+            if(isSnakeOrSpider) {
+                snake.Move();
+            } else {
+                snake.MoveSpider();
+            }
             if (snake.eats(food)) {
                 snake.grow(1);
                 snake.addNode(food);
@@ -174,13 +189,12 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         repaint();
     }
     
-    public boolean setMode(boolean mode) {
-        if(mode) {
-            tick();
-        } else {
-            tickBlackVoid();
-        }
-        return false;
+    public void setMode(boolean mode) {
+        this.isNormalMode = mode;
+    }
+    
+    public void setSnakeBody(boolean snakeBody) {
+        this.isSnakeOrSpider = snakeBody;
     }
     
     public void gameOver() {
@@ -274,8 +288,9 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     
     /*
     No se que estoy haciendo:
-    - Poder cambiar de modos entre normal a locura extrema DAAAAAAA (En proceso)
     - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
+    - Corregir el error de chocarse consigo mismo en la misma linea en la que va.
+    - Hacer que el snake cambie de forma a una "araña".
     */
 
     /**
