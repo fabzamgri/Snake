@@ -52,13 +52,23 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         jLabel1 = new javax.swing.JLabel();
         Restart = new javax.swing.JButton();
         BlackVoid = new javax.swing.JToggleButton();
-        Spider = new javax.swing.JToggleButton();
+        SpiderBody = new javax.swing.JToggleButton();
         EXit = new javax.swing.JButton();
+        NormalMOde = new javax.swing.JToggleButton();
+        SnakeBody = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setBackground(new java.awt.Color(25, 82, 104));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLabel1.setBackground(new java.awt.Color(242, 130, 176));
         jLabel1.setFont(new java.awt.Font("DejaVu Serif Condensed", 0, 36)); // NOI18N
         jLabel1.setText("Game Over");
+        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(111, 160, 207), null, null));
 
         Restart.setBackground(new java.awt.Color(255, 255, 204));
         Restart.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
@@ -70,13 +80,27 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         BlackVoid.setText("Black void");
         BlackVoid.addActionListener(this::BlackVoidActionPerformed);
 
-        Spider.setBackground(new java.awt.Color(0, 153, 153));
-        Spider.setText("Spider (experimental)");
-        Spider.addActionListener(this::SpiderActionPerformed);
+        SpiderBody.setBackground(new java.awt.Color(0, 153, 153));
+        SpiderBody.setText("Spider (experimental)");
+        SpiderBody.addActionListener(this::SpiderBodyActionPerformed);
 
         EXit.setBackground(new java.awt.Color(255, 102, 102));
         EXit.setText("Exit");
         EXit.addActionListener(this::EXitActionPerformed);
+
+        NormalMOde.setText("Normal Mode");
+        NormalMOde.addActionListener(this::NormalMOdeActionPerformed);
+
+        SnakeBody.setText("Snake (normal)");
+        SnakeBody.addActionListener(this::SnakeBodyActionPerformed);
+
+        jLabel2.setText("Body types!!!");
+
+        jLabel3.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
+        jLabel3.setText("Again?");
+
+        jLabel4.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
+        jLabel4.setText("Game Modes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,35 +108,59 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EXit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jLabel1))
+                        .addContainerGap()
+                        .addComponent(SpiderBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SnakeBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(EXit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Restart, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jLabel3)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BlackVoid)
-                            .addComponent(Spider))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(NormalMOde, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BlackVoid, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel4))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jLabel1)))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(BlackVoid)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Spider)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(NormalMOde))
+                    .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EXit)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SpiderBody)
+                    .addComponent(SnakeBody))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(EXit))
         );
 
         pack();
@@ -134,19 +182,52 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             board.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            initGamer.setMode(false);
         } else {
             System.err.println("Error: initGamer no está inicializado");
         }
     }//GEN-LAST:event_BlackVoidActionPerformed
 
-    private void SpiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpiderActionPerformed
+    private void SpiderBodyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpiderBodyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SpiderActionPerformed
+        if (initGamer != null) {
+            board.setMode(false);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+            initGamer.setSnakeBody(false);
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
+    }//GEN-LAST:event_SpiderBodyActionPerformed
 
     private void EXitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_EXitActionPerformed
+
+    private void NormalMOdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NormalMOdeActionPerformed
+        // TODO add your handling code here:
+        if (initGamer != null) {
+            board.setMode(false);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+            initGamer.setMode(true);
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
+    }//GEN-LAST:event_NormalMOdeActionPerformed
+
+    private void SnakeBodyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SnakeBodyActionPerformed
+        // TODO add your handling code here:
+        if (initGamer != null) {
+            board.setMode(false);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+            initGamer.setSnakeBody(true);
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
+    }//GEN-LAST:event_SnakeBodyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,8 +269,13 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BlackVoid;
     private javax.swing.JButton EXit;
+    private javax.swing.JToggleButton NormalMOde;
     private javax.swing.JButton Restart;
-    private javax.swing.JToggleButton Spider;
+    private javax.swing.JToggleButton SnakeBody;
+    private javax.swing.JToggleButton SpiderBody;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
