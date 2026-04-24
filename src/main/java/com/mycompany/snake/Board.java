@@ -69,7 +69,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private Snake snake;
     private Timer timer;
     private DrawSquareInterface drawSquareInterface;
-    public static final int DELTA_TIME = 200;
+    public int deltaTime = 200;
     private Food food;
     private Incrementer incrementer;
     private SpecialFood specialFood;
@@ -91,7 +91,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         
         specialFood = null;
         
-        timer = new Timer(DELTA_TIME, new ActionListener() {
+        timer = new Timer(deltaTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (isNormalMode) {
@@ -195,6 +195,10 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     
     public void setSnakeBody(boolean snakeBody) {
         this.isSnakeOrSpider = snakeBody;
+    }
+    
+    public void setDeltaTime(int speed) {
+        this.deltaTime = speed;
     }
     
     public void gameOver() {
