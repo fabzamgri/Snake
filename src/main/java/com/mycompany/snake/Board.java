@@ -71,6 +71,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private DrawSquareInterface drawSquareInterface;
     public int deltaTime = 200;
     private Food food;
+    private int timeTrialRecord;
     private Incrementer incrementer;
     private SpecialFood specialFood;
     private ScoreBoard sb;
@@ -91,7 +92,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         
         specialFood = null;
         
-        timer = new Timer(deltaTime, new ActionListener() {
+        timer = new Timer(setDeltaTime(deltaTime), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (isNormalMode) {
@@ -122,6 +123,13 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         // 4. Iniciar el cronómetro AL FINAL
         timer.start();
     }
+    
+    /*
+    No se que estoy haciendo:
+    - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
+    - Corregir el error de chocarse consigo mismo en la misma linea en la que va.
+    - Terminar el TimeTrail.
+    */
     
     public void tick() {
         if (snake.canMoveAny()) {
@@ -197,8 +205,23 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         this.isSnakeOrSpider = snakeBody;
     }
     
-    public void setDeltaTime(int speed) {
+    public int setDeltaTime(int speed) {
         this.deltaTime = speed;
+        if (timer != null) {
+            timer.setDelay(speed);
+        }
+        return speed;
+    }
+    
+    public void setTimeTrial(boolean timeTrial) {
+        timeTrialRecord = 3;
+        if (timeTrial) {
+            if (timeTrialRecord == 0) {
+                timer.stop();
+            }
+        } else {
+            timeTrialRecord -= 1;
+        }
     }
     
     public void gameOver() {
@@ -290,12 +313,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         }
     }
     
-    /*
-    No se que estoy haciendo:
-    - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
-    - Corregir el error de chocarse consigo mismo en la misma linea en la que va.
-    - Hacer que el snake cambie de forma a una "araña".
-    */
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

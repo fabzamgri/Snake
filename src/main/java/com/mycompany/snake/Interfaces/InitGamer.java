@@ -14,4 +14,8 @@ public interface InitGamer {
     public void setMode(boolean blackVoid);
     //Mejor hago un booleano de que snake prefiere el jugador
     public void setSnakeBody(boolean snakeBody);
+    //Metodo para cambiar el numero DELTA_TIME a gusto del jugador
+    public int setDeltaTime(int speed);
+    //Metodo para el timetrial
+    public void setTimeTrial(boolean timeTrial);
 }

@@ -30,10 +30,6 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         this.initGamer = initGamer;
     }
     
-    public void setVoidMode() {
-        
-    }
-    
     @Override
     public void setVisible(Component component) {
         setLocationRelativeTo(this);
@@ -59,6 +55,9 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        SpeedOfSnake = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        TimeTrial = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -102,6 +101,14 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         jLabel4.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
         jLabel4.setText("Game Modes");
 
+        SpeedOfSnake.setText("200");
+        SpeedOfSnake.addActionListener(this::SpeedOfSnakeActionPerformed);
+
+        jLabel5.setText("Speed of Snake:");
+
+        TimeTrial.setText("Time trial");
+        TimeTrial.addActionListener(this::TimeTrialActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,11 +116,6 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(EXit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(SpiderBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(SnakeBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
                         .addComponent(jLabel2))
@@ -125,16 +127,29 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel3)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NormalMOde, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BlackVoid, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(NormalMOde, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                            .addComponent(BlackVoid, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
-                                .addComponent(jLabel4))))
+                                .addComponent(jLabel4))
+                            .addComponent(TimeTrial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
-                        .addComponent(jLabel1)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SpeedOfSnake))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(SpiderBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(SnakeBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,12 +161,13 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(BlackVoid)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(NormalMOde))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NormalMOde)
+                        .addGap(18, 18, 18)
+                        .addComponent(TimeTrial))
                     .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
@@ -159,7 +175,11 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SpiderBody)
                     .addComponent(SnakeBody))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SpeedOfSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(EXit))
         );
 
@@ -182,6 +202,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             board.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            //inicializa el black void y lo hace funcional (false = activado)
             initGamer.setMode(false);
         } else {
             System.err.println("Error: initGamer no está inicializado");
@@ -194,6 +215,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             board.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            //Inicializa el cuerpo de araña (false = activado)
             initGamer.setSnakeBody(false);
         } else {
             System.err.println("Error: initGamer no está inicializado");
@@ -211,6 +233,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             board.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            //Inicializa el modo normal del snake (true = desactivado)
             initGamer.setMode(true);
         } else {
             System.err.println("Error: initGamer no está inicializado");
@@ -223,11 +246,48 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             board.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            //Inicializa el modo normal del snake (true = activado)
             initGamer.setSnakeBody(true);
         } else {
             System.err.println("Error: initGamer no está inicializado");
         }
     }//GEN-LAST:event_SnakeBodyActionPerformed
+
+    private void SpeedOfSnakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpeedOfSnakeActionPerformed
+        // TODO add your handling code here:
+        //Falta hacer esto recuerda, asegura el 10 (Del espacio le llego algo muy especial)
+        String s = SpeedOfSnake.getText();
+        int speed = Integer.parseInt(s);
+        if (speed > 1000) {
+            speed = 1000;
+        } else if (speed < 0) {
+            speed = 0;
+        }
+        
+        SpeedOfSnake.setText(String.valueOf(speed));
+        
+        if (initGamer != null) {
+            board.setDeltaTime(speed);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+            initGamer.setSnakeBody(true);
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
+    }//GEN-LAST:event_SpeedOfSnakeActionPerformed
+
+    private void TimeTrialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeTrialActionPerformed
+        // TODO add your handling code here:
+        if (initGamer != null) {
+            board.setMode(false);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
+            initGamer.initGame();
+            //inicializa el black void y lo hace funcional (false = activado)
+            initGamer.setTimeTrial(false);
+        } else {
+            System.err.println("Error: initGamer no está inicializado");
+        }
+    }//GEN-LAST:event_TimeTrialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,10 +332,13 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private javax.swing.JToggleButton NormalMOde;
     private javax.swing.JButton Restart;
     private javax.swing.JToggleButton SnakeBody;
+    private javax.swing.JTextField SpeedOfSnake;
     private javax.swing.JToggleButton SpiderBody;
+    private javax.swing.JToggleButton TimeTrial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
