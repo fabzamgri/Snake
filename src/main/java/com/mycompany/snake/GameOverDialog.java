@@ -16,7 +16,6 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameOverDialog.class.getName());
     InitGamer initGamer;
-    Board board = new Board();
 
     /**
      * Creates new form GameOverDialog
@@ -45,7 +44,11 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        SpeedOfSnake = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        TimeTrial = new javax.swing.JToggleButton();
         Restart = new javax.swing.JButton();
         BlackVoid = new javax.swing.JToggleButton();
         SpiderBody = new javax.swing.JToggleButton();
@@ -54,133 +57,175 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         SnakeBody = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        SpeedOfSnake = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        TimeTrial = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
+        Creditos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(25, 82, 104));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabel1.setBackground(new java.awt.Color(242, 130, 176));
-        jLabel1.setFont(new java.awt.Font("DejaVu Serif Condensed", 0, 36)); // NOI18N
-        jLabel1.setText("Game Over");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(111, 160, 207), null, null));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        Restart.setBackground(new java.awt.Color(255, 255, 204));
+        jLabel4.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Game Modes");
+
+        SpeedOfSnake.setBackground(new java.awt.Color(204, 102, 255));
+        SpeedOfSnake.setForeground(new java.awt.Color(255, 255, 255));
+        SpeedOfSnake.setText("200");
+        SpeedOfSnake.addActionListener(this::SpeedOfSnakeActionPerformed);
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Speed of Snake:");
+
+        TimeTrial.setBackground(new java.awt.Color(134, 30, 30));
+        TimeTrial.setForeground(new java.awt.Color(255, 255, 255));
+        TimeTrial.setText("Time trial");
+        TimeTrial.addActionListener(this::TimeTrialActionPerformed);
+
+        Restart.setBackground(new java.awt.Color(102, 102, 255));
         Restart.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
+        Restart.setForeground(new java.awt.Color(255, 255, 255));
         Restart.setText("Restart");
-        Restart.setBorder(null);
+        Restart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Restart.addActionListener(this::RestartActionPerformed);
 
         BlackVoid.setBackground(new java.awt.Color(153, 153, 255));
+        BlackVoid.setForeground(new java.awt.Color(255, 255, 255));
         BlackVoid.setText("Black void");
         BlackVoid.addActionListener(this::BlackVoidActionPerformed);
 
         SpiderBody.setBackground(new java.awt.Color(0, 153, 153));
+        SpiderBody.setForeground(new java.awt.Color(255, 255, 255));
         SpiderBody.setText("Spider (experimental)");
         SpiderBody.addActionListener(this::SpiderBodyActionPerformed);
 
         EXit.setBackground(new java.awt.Color(255, 102, 102));
+        EXit.setForeground(new java.awt.Color(255, 255, 255));
         EXit.setText("Exit");
         EXit.addActionListener(this::EXitActionPerformed);
 
+        NormalMOde.setBackground(new java.awt.Color(219, 120, 120));
+        NormalMOde.setForeground(new java.awt.Color(255, 255, 255));
         NormalMOde.setText("Normal Mode");
         NormalMOde.addActionListener(this::NormalMOdeActionPerformed);
 
+        SnakeBody.setBackground(new java.awt.Color(255, 75, 73));
+        SnakeBody.setForeground(new java.awt.Color(255, 255, 255));
         SnakeBody.setText("Snake (normal)");
         SnakeBody.addActionListener(this::SnakeBodyActionPerformed);
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Body types!!!");
 
         jLabel3.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Again?");
 
-        jLabel4.setFont(new java.awt.Font("MathJax_Typewriter", 2, 24)); // NOI18N
-        jLabel4.setText("Game Modes");
+        jLabel1.setBackground(new java.awt.Color(242, 96, 151));
+        jLabel1.setFont(new java.awt.Font("DejaVu Serif Condensed", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Game Over");
+        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(111, 160, 207), null, null));
 
-        SpeedOfSnake.setText("200");
-        SpeedOfSnake.addActionListener(this::SpeedOfSnakeActionPerformed);
+        Creditos.setText("Creditos");
 
-        jLabel5.setText("Speed of Snake:");
-
-        TimeTrial.setText("Time trial");
-        TimeTrial.addActionListener(this::TimeTrialActionPerformed);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EXit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
                         .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(NormalMOde, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addComponent(BlackVoid, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel4))
-                            .addComponent(TimeTrial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SpeedOfSnake))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(SpiderBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(SnakeBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(EXit, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Creditos))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(SpeedOfSnake, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(SpiderBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(SnakeBody, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(48, 48, 48)
+                                            .addComponent(jLabel3)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(NormalMOde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(BlackVoid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(TimeTrial, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(30, 30, 30))))))))
+                .addGap(0, 14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(110, 110, 110))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BlackVoid)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(NormalMOde)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TimeTrial))
                     .addComponent(Restart, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SpiderBody)
                     .addComponent(SnakeBody))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SpeedOfSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(EXit))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SpeedOfSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(EXit))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Creditos)
+                        .addContainerGap())))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -199,7 +244,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void BlackVoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlackVoidActionPerformed
         // TODO add your handling code here:
         if (initGamer != null) {
-            board.setMode(false);
+            initGamer.setMode(true);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
             //inicializa el black void y lo hace funcional (false = activado)
@@ -212,7 +257,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void SpiderBodyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpiderBodyActionPerformed
         // TODO add your handling code here:
         if (initGamer != null) {
-            board.setMode(false);
+            initGamer.setMode(true);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
             //Inicializa el cuerpo de araña (false = activado)
@@ -230,7 +275,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void NormalMOdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NormalMOdeActionPerformed
         // TODO add your handling code here:
         if (initGamer != null) {
-            board.setMode(false);
+            initGamer.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
             //Inicializa el modo normal del snake (true = desactivado)
@@ -243,7 +288,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void SnakeBodyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SnakeBodyActionPerformed
         // TODO add your handling code here:
         if (initGamer != null) {
-            board.setMode(false);
+            initGamer.setMode(false);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
             //Inicializa el modo normal del snake (true = activado)
@@ -256,8 +301,11 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void SpeedOfSnakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpeedOfSnakeActionPerformed
         // TODO add your handling code here:
         //Falta hacer esto recuerda, asegura el 10 (Del espacio le llego algo muy especial)
+        //Los sout sirven para saber como sigue la logica en el terminal
         String s = SpeedOfSnake.getText();
+        System.out.println("Texto leído del textfield: '" + s + "'");
         int speed = Integer.parseInt(s);
+        System.out.println("Speed parseado: " + speed); // ← y esto
         if (speed > 1000) {
             speed = 1000;
         } else if (speed < 0) {
@@ -267,10 +315,10 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         SpeedOfSnake.setText(String.valueOf(speed));
         
         if (initGamer != null) {
-            board.setDeltaTime(speed);
-            this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
+            initGamer.setDeltaTime(speed);
             initGamer.setSnakeBody(true);
+            this.dispose(); // Es mejor usar dispose() para liberar memoria
         } else {
             System.err.println("Error: initGamer no está inicializado");
         }
@@ -279,11 +327,10 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private void TimeTrialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeTrialActionPerformed
         // TODO add your handling code here:
         if (initGamer != null) {
-            board.setMode(false);
+            initGamer.setMode(true);
             this.dispose(); // Es mejor usar dispose() para liberar memoria
             initGamer.initGame();
-            //inicializa el black void y lo hace funcional (false = activado)
-            initGamer.setTimeTrial(false);
+            initGamer.setTimeTrial(5);
         } else {
             System.err.println("Error: initGamer no está inicializado");
         }
@@ -328,6 +375,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BlackVoid;
+    private javax.swing.JButton Creditos;
     private javax.swing.JButton EXit;
     private javax.swing.JToggleButton NormalMOde;
     private javax.swing.JButton Restart;
@@ -340,5 +388,6 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

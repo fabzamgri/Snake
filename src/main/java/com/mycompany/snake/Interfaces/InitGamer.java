@@ -17,5 +17,5 @@ public interface InitGamer {
     //Metodo para cambiar el numero DELTA_TIME a gusto del jugador
     public int setDeltaTime(int speed);
     //Metodo para el timetrial
-    public void setTimeTrial(boolean timeTrial);
+    public void setTimeTrial(int timeTrial);
 }

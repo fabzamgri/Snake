@@ -10,6 +10,7 @@ import com.mycompany.snake.Interfaces.Incrementer;
 import com.mycompany.snake.Interfaces.InitGamer;
 import static com.mycompany.snake.SquareType.HEAD;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -68,10 +69,11 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     public static int NUM_COLS = 20;
     private Snake snake;
     private Timer timer;
+    private Timer timerCountDown;
+    private int timeTrialCount;
     private DrawSquareInterface drawSquareInterface;
     public int deltaTime = 200;
     private Food food;
-    private int timeTrialRecord;
     private Incrementer incrementer;
     private SpecialFood specialFood;
     private ScoreBoard sb;
@@ -79,6 +81,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private GameOverDialog gameOverDialog;
     private boolean isNormalMode = true;
     private boolean isSnakeOrSpider = true;
+    private boolean isTimeTrial = true;
     
     /**
      * Creates new form Board
@@ -92,6 +95,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         
         specialFood = null;
         
+        //El timer recibira un deltaTime dinamico
         timer = new Timer(setDeltaTime(deltaTime), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -106,19 +110,31 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     }
     
     public void initGame() {
+        if (timerCountDown != null) {
+            timerCountDown.stop();
+        }
+        isTimeTrial = false;
+        timeTrialCount = 0;
+        //Los sout sirven para saber como se estan haciendo las operaciones en la terminal misma
+        System.out.println("initGame ejecutado, deltaTime = " + this.deltaTime);
         if (timer != null) {
             timer.stop();
-        }
+        } 
 
         // 2. Resetear el marcador
         if (incrementer != null) {
             incrementer.reset();
-        }
+        } else {
+        System.out.println("INCREMENTER ES NULL");  // ← añade esto
+    }
 
         // 3. Crear los objetos PRIMERO
         snake = new Snake(this);
         food = new Food(snake, this);
         specialFood = new SpecialFood(snake, this);
+        System.out.println("Aplicando delay: " + this.deltaTime);
+        //Caso nuevo: Inicializar velocidad dinamica
+        timer.setDelay(this.deltaTime);
 
         // 4. Iniciar el cronómetro AL FINAL
         timer.start();
@@ -126,19 +142,18 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     
     /*
     No se que estoy haciendo:
-    - Falta añadir el configdialog para decirle al jugador en cuanto deltatime quiere que vaya el juego
     - Corregir el error de chocarse consigo mismo en la misma linea en la que va.
     - Terminar el TimeTrail.
     */
     
     public void tick() {
         if (snake.canMoveAny()) {
-            if(isSnakeOrSpider) {
+            if (isSnakeOrSpider) {
                 snake.Move();
             } else {
                 snake.MoveSpider();
             }
-            
+
             if (snake.eats(food)) {
                 snake.grow(1);
                 snake.addNode(food);
@@ -146,6 +161,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
                 //El agujero negro solo sale si cambias la secuencia en la que se ejecuta el food XD.
                 System.out.println("eat it");
                 incrementer.incrementScore(1);
+                if (isTimeTrial) timeTrialCount += 1;
             }
             if (snake.eats(specialFood)) {
                 snake.grow(3);
@@ -153,8 +169,9 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
                 specialFood = new SpecialFood(snake, this);
                 System.out.println("hooo my cock");
                 incrementer.incrementScore(3);
+                if (isTimeTrial) timeTrialCount += 3;
             }
-            
+
             if (snake.colidesWithItself(food)) {
                 System.out.println("Salvation chuqubuke ijeanlli añauwu");
             }
@@ -172,6 +189,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
             } else {
                 snake.MoveSpider();
             }
+            
             if (snake.eats(food)) {
                 snake.grow(1);
                 snake.addNode(food);
@@ -179,13 +197,16 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
                 //El agujero negro solo sale si cambias la secuencia en la que se ejecuta el food XD.
                 System.out.println("eat it");
                 incrementer.incrementScore(1);
+                if (isTimeTrial) timeTrialCount += 1;
             }
+            //Solo se le añadira esa funcion de agujero negro a la fruta especial
             if (snake.eats(specialFood)) {
                 snake.grow(3);
                 specialFood = new SpecialFood(snake, this);
                 snake.addNode(specialFood);
                 System.out.println("hooo my cock");
                 incrementer.incrementScore(3);
+                if (isTimeTrial) timeTrialCount += 3;
             }
             
             if (snake.colidesWithItself(food)) {
@@ -206,6 +227,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     }
     
     public int setDeltaTime(int speed) {
+        System.out.println("setDeltaTime llamado con: " + speed);
         this.deltaTime = speed;
         if (timer != null) {
             timer.setDelay(speed);
@@ -213,15 +235,23 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         return speed;
     }
     
-    public void setTimeTrial(boolean timeTrial) {
-        timeTrialRecord = 3;
-        if (timeTrial) {
-            if (timeTrialRecord == 0) {
-                timer.stop();
-            }
-        } else {
-            timeTrialRecord -= 1;
+    public void setTimeTrial(int seconds) {
+        this.isTimeTrial = true;
+        this.timeTrialCount = seconds;
+
+        if (timerCountDown != null) {
+            timerCountDown.stop();
         }
+
+        timerCountDown = new Timer(1000, e -> {
+            timeTrialCount--;
+            System.out.println("Tiempo restante: " + timeTrialCount);
+            if (timeTrialCount <= 0) {
+                timerCountDown.stop();
+                gameOver();
+            }
+        });
+        timerCountDown.start();
     }
     
     public void gameOver() {
@@ -285,8 +315,10 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         snake.paint(g);
+        paintBorderBoard(g);
         food.paintFood(g);
         specialFood.paintFood(g);
+        if (isTimeTrial) paintTimeTrial(g);
         Toolkit.getDefaultToolkit().sync();
     }
     
@@ -311,6 +343,15 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
             default:
                 throw new AssertionError();
         }
+    }
+    
+    // Muestra el tiempo restante en la esquina superior derecha, igual que draw
+    private void paintTimeTrial(Graphics g) {
+        Color color = timeTrialCount <= 3 ? new Color(204, 102, 102)   // rojo si quedan ≤3 seg
+                                     : new Color(37, 211, 102);    // verde normal
+        g.setColor(color);
+        g.setFont(new Font("Open Sans Semibold", Font.BOLD, 18));
+        g.drawString("Time: " + timeTrialCount, getWidth() - 80, 20);
     }
     
     
