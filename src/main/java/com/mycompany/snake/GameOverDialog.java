@@ -16,6 +16,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameOverDialog.class.getName());
     InitGamer initGamer;
+    Credits credits;
 
     /**
      * Creates new form GameOverDialog
@@ -131,6 +132,7 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(111, 160, 207), null, null));
 
         Creditos.setText("Creditos");
+        Creditos.addActionListener(this::CreditosActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -335,6 +337,17 @@ public class GameOverDialog extends javax.swing.JDialog implements GameOverInter
             System.err.println("Error: initGamer no está inicializado");
         }
     }//GEN-LAST:event_TimeTrialActionPerformed
+
+    private void CreditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreditosActionPerformed
+        // TODO add your handling code here:
+        java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        credits = new Credits(parent, true);
+
+        // 3. Mostrar la ventana de créditos
+        // Usamos el setVisible(true) estándar de Java por ahora
+        credits.setLocationRelativeTo(this);
+        credits.setVisible(true);
+    }//GEN-LAST:event_CreditosActionPerformed
 
     /**
      * @param args the command line arguments
