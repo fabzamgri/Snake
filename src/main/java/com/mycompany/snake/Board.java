@@ -33,26 +33,30 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    if(snake.getDirection() != Direction.RIGHT) {
+                    if(snake.getDirection() != Direction.RIGHT && !turning) {
                         snake.changeDirection(Direction.LEFT);
+                        turning = true;
                     }
                     System.out.println("LEFT");
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if(snake.getDirection() != Direction.LEFT) {
+                    if(snake.getDirection() != Direction.LEFT && !turning) {
                        snake.changeDirection(Direction.RIGHT);
+                       turning = true;
                     }
                     System.out.println("RIGHT");
                     break;
                 case KeyEvent.VK_UP:
-                    if (snake.getDirection() != Direction.DOWN) {
+                    if (snake.getDirection() != Direction.DOWN && !turning) {
                         snake.changeDirection(Direction.UP);
+                        turning = true;
                     }
                     System.out.println("UP");
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (snake.getDirection() != Direction.UP) {
+                    if (snake.getDirection() != Direction.UP && !turning) {
                        snake.changeDirection(Direction.DOWN);
+                       turning = true;
                     }
                     System.out.println("DOWN");
                     break;
@@ -82,6 +86,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
     private boolean isNormalMode = true;
     private boolean isSnakeOrSpider = true;
     private boolean isTimeTrial = true;
+    private boolean turning;
     
     /**
      * Creates new form Board
@@ -115,20 +120,21 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         }
         isTimeTrial = false;
         timeTrialCount = 0;
+        
         //Los sout sirven para saber como se estan haciendo las operaciones en la terminal misma
         System.out.println("initGame ejecutado, deltaTime = " + this.deltaTime);
         if (timer != null) {
             timer.stop();
         } 
 
-        // 2. Resetear el marcador
+        //Resetear el marcador
         if (incrementer != null) {
             incrementer.reset();
         } else {
         System.out.println("INCREMENTER ES NULL");  // ← añade esto
     }
 
-        // 3. Crear los objetos PRIMERO
+        //Crear los objetos PRIMERO
         snake = new Snake(this);
         food = new Food(snake, this);
         specialFood = new SpecialFood(snake, this);
@@ -136,7 +142,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
         //Caso nuevo: Inicializar velocidad dinamica
         timer.setDelay(this.deltaTime);
 
-        // 4. Iniciar el cronómetro AL FINAL
+        //Iniciar el cronómetro AL FINAL
         timer.start();
     }
     
@@ -166,6 +172,8 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
             if (snake.eats(specialFood)) {
                 snake.grow(3);
                 snake.addNode(specialFood);
+                snake.addNode(specialFood);
+                snake.addNode(specialFood);
                 specialFood = new SpecialFood(snake, this);
                 System.out.println("hooo my cock");
                 incrementer.incrementScore(3);
@@ -179,6 +187,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
             gameOver();
         }
         repaint();
+        turning = false;
     }
     
     //Comenzar cuando haya terminado el programa
@@ -204,6 +213,8 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
                 snake.grow(3);
                 specialFood = new SpecialFood(snake, this);
                 snake.addNode(specialFood);
+                snake.addNode(specialFood);
+                snake.addNode(specialFood);
                 System.out.println("hooo my cock");
                 incrementer.incrementScore(3);
                 if (isTimeTrial) timeTrialCount += 3;
@@ -216,6 +227,7 @@ public class Board extends javax.swing.JPanel implements DrawSquareInterface, In
             gameOver();
         }
         repaint();
+        turning = false;
     }
     
     public void setMode(boolean mode) {
